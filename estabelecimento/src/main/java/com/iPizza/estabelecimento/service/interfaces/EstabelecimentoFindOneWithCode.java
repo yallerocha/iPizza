@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import com.iPizza.estabelecimento.model.Estabelecimento;
 
-public interface EstabelecimentoFindOne {
+public interface EstabelecimentoFindOneWithCode {
 
-    public Estabelecimento findOne(UUID id);
+    public Estabelecimento findOneWithCode(UUID id, String codigo);
 }

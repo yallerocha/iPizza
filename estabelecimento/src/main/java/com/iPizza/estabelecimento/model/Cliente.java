@@ -1,9 +1,10 @@
 package com.iPizza.estabelecimento.model;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,26 +16,25 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Cliente implements Serializable{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty
-    private Long id;
-
-    @OneToMany(mappedBy = "cliente")
-    @JsonIgnore
-    private List<Interesse> interesses;
+    private UUID id;
     
-    @Column(name = "nome", nullable = false)
-    @JsonProperty
+    @Column(nullable = false)
     private String nome;
-    @Column(name = "email", nullable = false)
-    @JsonProperty
+
+    @Column(nullable = false)
     private String email;
-    @Embedded
-    @JsonProperty
-    private Endereco endereco;
-    @Column(name = "cod", nullable = false)
-    @JsonIgnore
+
+    @Column(nullable = false)
     private String cod;
+    
+    @JsonIgnore
+    @OneToMany(mappedBy = "clienteId")
+    private List<Interesse> interesses;
+
+    @Embedded
+    private Endereco endereco;
 }

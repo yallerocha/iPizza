@@ -4,5 +4,7 @@ import com.iPizza.estabelecimento.dto.EstabelecimentoPostPutDTO;
 import com.iPizza.estabelecimento.model.Estabelecimento;
 
 public interface EstabelecimentoCreate {
-    public Estabelecimento create(EstabelecimentoPostPutDTO estabelecimentoPostDTO);
+
+    public Estabelecimento create(EstabelecimentoPostPutDTO estabelecimentoPostPutDTO);
+    
 }

@@ -1,6 +1,7 @@
 package com.iPizza.estabelecimento.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,43 +13,39 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pizza {
+public class Pizza implements Serializable {
+
+    @Column(nullable = false)
+    private String tamanho;
+
+    private Double preco;
 
     @ManyToOne
     @JoinColumn(name = "sabor1", nullable = false)
-    @JsonProperty("sabor1")
     private Sabor sabor1;
 
     @ManyToOne
     @JoinColumn(name = "sabor2", nullable = true)
-    @JsonProperty("sabor2")
     private Sabor sabor2;
 
-    @Column(name = "tamanho", nullable = false)
-    private String tamanho;
-
-    @Column(name = "preco")
-    private Double preco;
-
-    public void calcValor(){
-        if(tamanho.equals("media")){
+    public void calcValor() {
+        if (tamanho.equals("media")) {
             this.calcValorMedia();
-        }else{
+        } else {
             this.calcValorGrande();
         }
     }
 
-    private void calcValorMedia(){
+    private void calcValorMedia() {
         this.preco = this.sabor1.getPrecoM();
     }
 
-    private void calcValorGrande(){
+    private void calcValorGrande() {
         Double total = this.sabor1.getPrecoG();
 
-        if(this.sabor2 != null){
+        if (this.sabor2 != null) {
             total = (total + this.sabor2.getPrecoG()) / 2;
         }
-
         this.preco = total;
     }
 

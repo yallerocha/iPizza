@@ -1,6 +1,8 @@
 package com.iPizza.estabelecimento.model;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -14,30 +16,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Entregador {
+public class Entregador implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @OneToMany(mappedBy = "entregador")
-    @Embedded
-    @JsonIgnore
-    private List<Associacao> associacoes;
-
-    @Column(name = "nome" ,nullable = false)
+    @Column(nullable = false)
     private String nome;
 
-    @Column(name = "placa" ,nullable = false)
+    @Column(nullable = false)
     private String placaVeiculo;
 
-    @Column(name = "corVeiculo" ,nullable = false)
+    @Column(nullable = false)
     private String corVeiculo;
 
-    @Column(name = "tipoVeiculo" ,nullable = false)
+    @Column(nullable = false)
     private String tipoVeiculo;
 
-    @Column(name = "codigoAcesso" ,nullable = false)
+    @Column(nullable = false)
     @JsonIgnore
     private String codigoAcesso;
+
+    @Embedded
+    @JsonIgnore
+    @OneToMany(mappedBy = "entregadorId")
+    private List<Associacao> associacoes;
 }

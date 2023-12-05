@@ -1,6 +1,5 @@
 package com.iPizza.estabelecimento.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.iPizza.estabelecimento.enuns.StatusAssociacao;
 
 import jakarta.persistence.*;
@@ -9,7 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -17,33 +18,26 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class Associacao {
+public class Associacao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty("id")
-    private Long id;
+    private UUID id;
+
+    @Column(nullable = false)
+    private StatusAssociacao status;
+
+    private String statusEntregador;
 
     @ManyToOne
     @JoinColumn(name = "estabelecimento")
-    @JsonProperty("estabelecimento")
-    private Estabelecimento estabelecimento;
+    private Estabelecimento estabelecimentoId;
 
     @ManyToOne
     @JoinColumn(name = "entregador")
-    @JsonProperty("entregador")
-    private Entregador entregador;
+    private Entregador entregadorId;
 
-    @OneToMany(mappedBy = "associacao", fetch = FetchType.EAGER)
-    @JsonProperty("entregas")
+    @OneToMany(mappedBy = "associacaoId", fetch = FetchType.EAGER)
     private List<Entrega> entregas;
-
-    @Column(name = "status", nullable = false)
-    @JsonProperty("status")
-    private StatusAssociacao status;
-
-    @Column(name = "statusEntregador")
-    @JsonProperty("statusEntregador")
-    private String statusEntregador;
 
 }

@@ -10,15 +10,16 @@ import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoCreate;
 
 @Service
 public class EstabelecimentoCreateService implements EstabelecimentoCreate {
+        
     @Autowired
     private EstabelecimentoRepository estabelecimentoRepository;
 
-    public Estabelecimento create(EstabelecimentoPostPutDTO estabelecimentoPostDTO){
-            return estabelecimentoRepository.save(
-                    Estabelecimento.builder()
-                            .codigo(estabelecimentoPostDTO.getCodigo())
-                            .email(estabelecimentoPostDTO.getEmail())
-                            .build()
-            );
+    public Estabelecimento create(EstabelecimentoPostPutDTO estabelecimentoPostPutDTO) {
+        
+        return estabelecimentoRepository.save(Estabelecimento.builder()
+                    .codigo(estabelecimentoPostPutDTO.getCodigo())
+                    .email(estabelecimentoPostPutDTO.getEmail())
+                    .build()
+        );
     }
 }

@@ -1,7 +1,6 @@
 package com.iPizza.estabelecimento.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.iPizza.estabelecimento.enuns.StatusPedido;
 
 import jakarta.persistence.*;
@@ -10,60 +9,54 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pedido {
+public class Pedido implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente", nullable = false)
-    @JsonProperty("cliente")
-    private Cliente  cliente;
+    @JoinColumn(nullable = false)
+    private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "estabelecimento_id", nullable = false)
-    @JsonProperty("estabelecimento")
-    private Estabelecimento  estabelecimento;
+    @JoinColumn(nullable = false)
+    private Estabelecimento estabelecimentoId;
 
-    @OneToOne(mappedBy = "pedido")
+    @OneToOne(mappedBy = "pedidoId")
     @JsonIgnore
     private Entrega entrega;
 
     @ManyToOne
     @JoinColumn(name = "entregador")
-    @JsonProperty("entregador")
-    private Entregador  entregador;
+    private Entregador entregador;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<Pizza> pizzas;
 
-    @Column(name = "preco")
     private Double preco;
 
-    @Column(name = "status")
-    @JsonProperty("status")
     private StatusPedido status;
 
-    @Column(name = "enderecoEntrega", nullable = false)
+    @Column(nullable = false)
     private Endereco enderecoEntrega;
 
-    @Column(name = "statusPagamento")
     private boolean statusPagamento;
 
-    public void calcValor(){
+    public void calcValor() {
         Double total = 0.0;
         for (Pizza pizza: pizzas) {
             total += pizza.getPreco();
         }
-
         this.preco = total;
     }
 }

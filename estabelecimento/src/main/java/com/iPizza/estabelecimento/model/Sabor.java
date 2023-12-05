@@ -1,7 +1,9 @@
 package com.iPizza.estabelecimento.model;
 
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,41 +18,33 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "sabores")
-public class Sabor {
+public class Sabor implements Serializable {
 
     @Id
     @JsonProperty("id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @OneToMany(mappedBy = "sabor")
+    @OneToMany(mappedBy = "saborId")
     @JsonIgnore
     private List<Interesse> interesses;
 
     @ManyToOne
-    @JoinColumn(name = "estabelecimento", nullable = false)
-    @JsonProperty("estabelecimento")
+    @JoinColumn(nullable = false)
     private Estabelecimento  estabelecimento;
 
-
-    @JsonProperty("nome")
     @Column(nullable = false)
     private String nome;
 
-    @JsonProperty("tipo")
     @Column(nullable = false)
     private String tipo;
 
-    @JsonProperty("precoM")
     @Column(nullable = false)
     private Double precoM;
 
-    @JsonProperty("precoG")
     @Column(nullable = false)
     private Double precoG;
 
-    @JsonProperty("disponivel")
     @Column(nullable = false)
     private Boolean disponivel;
 
