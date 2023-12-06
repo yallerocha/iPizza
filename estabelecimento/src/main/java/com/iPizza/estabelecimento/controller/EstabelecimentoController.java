@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.iPizza.estabelecimento.dto.EstabelecimentoPostPutDTO;
+import com.iPizza.estabelecimento.dto.EstabelecimentoResponseDTO;
 import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoCreate;
 import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoDelete;
 import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoFindOne;
@@ -18,71 +19,71 @@ import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoUpdate;
 
 @RestController
 @RequestMapping(
-        value = "/estabelecimentos",
-        produces = MediaType.APPLICATION_JSON_VALUE
+	value = "/estabelecimentos",
+	produces = MediaType.APPLICATION_JSON_VALUE
 )
 public class EstabelecimentoController {
 
-        @Autowired
-        private EstabelecimentoDelete estabelecimentoDelete;
+	@Autowired
+	private EstabelecimentoDelete estabelecimentoDelete;
 
-        @Autowired
-        private EstabelecimentoCreate estabelecimentoCreate;
+	@Autowired
+	private EstabelecimentoCreate estabelecimentoCreate;
 
-        @Autowired
-        private EstabelecimentoUpdate estabelecimentoUpdate;
+	@Autowired
+	private EstabelecimentoUpdate estabelecimentoUpdate;
 
-        @Autowired
-        private EstabelecimentoFindOne estabelecimentoFindOne;
+	@Autowired
+	private EstabelecimentoFindOne estabelecimentoFindOne;
 
-        @Autowired
-        private EstabelecimentoFindOneWithCode EstabelecimentoFindOneWithCode;
+	@Autowired
+	private EstabelecimentoFindOneWithCode EstabelecimentoFindOneWithCode;
 
-        @PostMapping
-        public ResponseEntity<?> estabelecimentoPost (
-                @Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
-        ) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(estabelecimentoCreate.create(estabelecimentoPostPutDTO));
-        }
+	@PostMapping
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPost (
+			@Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
+	) {
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(new EstabelecimentoResponseDTO(estabelecimentoCreate.create(estabelecimentoPostPutDTO)));
+	}
 
-        @PutMapping("/{id}")
-        public ResponseEntity<?> estabelecimentoPut (
-                @PathVariable ("id") UUID id,
-                @Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
-        ) {
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(estabelecimentoUpdate.update(id, estabelecimentoPostPutDTO));
-        }
+	@PutMapping("/{id}")
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPut (
+			@PathVariable ("id") UUID id,
+			@Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
+	) {
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(new EstabelecimentoResponseDTO(estabelecimentoUpdate.update(id, estabelecimentoPostPutDTO)));
+	}
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<?> estabelecimentoDelete (
-                @PathVariable ("id") UUID id
-        ) {
-        estabelecimentoDelete.delete(id);
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
-        }
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> estabelecimentoDelete (
+			@PathVariable ("id") UUID id
+	) {
+		estabelecimentoDelete.delete(id);
+		return ResponseEntity
+				.status(HttpStatus.NO_CONTENT)
+				.build();
+	}
 
-        @GetMapping("/{id}")
-        public ResponseEntity<?> estabelecimentoGetOne (
-                @PathVariable ("id") UUID id
-        ) {
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(estabelecimentoFindOne.findOne(id));
-        }
-
-        @GetMapping("/{id}/codigo/{codigo}")
-        public ResponseEntity<?> estabelecimentoGetOneWithCode (
-                @PathVariable ("id") UUID id,
-                @PathVariable ("codigo") String codigo
-        ) {
-                return ResponseEntity
-                        .status(HttpStatus.OK)
-                        .body(EstabelecimentoFindOneWithCode.findOneWithCode(id, codigo));
-        }
+	@GetMapping("/{id}")
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOne (
+			@PathVariable ("id") UUID id
+	) {
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(new EstabelecimentoResponseDTO(estabelecimentoFindOne.findOne(id)));
+	}
+	
+	@GetMapping("/{id}/codigo/{codigo}")
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOneWithCode (
+			@PathVariable ("id") UUID id,
+			@PathVariable ("codigo") String codigo
+	) {
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(new EstabelecimentoResponseDTO(EstabelecimentoFindOneWithCode.findOneWithCode(id, codigo)));
+	}
 }
