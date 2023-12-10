@@ -14,7 +14,6 @@ public class EntregadorUpdateService implements EntregadorUpdate {
 
     @Autowired
     private EntregadorRepository entregadorRepository;
-
     @Autowired
     private EntregadorFindOneWithCode entregadorFindOneWithCodeService;
 

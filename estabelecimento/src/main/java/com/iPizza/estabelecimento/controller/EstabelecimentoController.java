@@ -26,16 +26,12 @@ public class EstabelecimentoController {
 
 	@Autowired
 	private EstabelecimentoDelete estabelecimentoDelete;
-
 	@Autowired
 	private EstabelecimentoCreate estabelecimentoCreate;
-
 	@Autowired
 	private EstabelecimentoUpdate estabelecimentoUpdate;
-
 	@Autowired
 	private EstabelecimentoFindOne estabelecimentoFindOne;
-
 	@Autowired
 	private EstabelecimentoFindOneWithCode EstabelecimentoFindOneWithCode;
 

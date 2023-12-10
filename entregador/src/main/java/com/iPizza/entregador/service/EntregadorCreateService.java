@@ -10,10 +10,13 @@ import com.iPizza.entregador.service.interfaces.EntregadorCreate;
 
 @Service
 public class EntregadorCreateService implements EntregadorCreate {
+
     @Autowired
     private EntregadorRepository entregadorRepository;
+
     @Override
-    public Entregador store(EntregadorPostPutRequestDTO entregadorPostPutRequestDTO) {
+    public Entregador create(EntregadorPostPutRequestDTO entregadorPostPutRequestDTO) {
+        
         return entregadorRepository.save(Entregador.builder()
                 .nome(entregadorPostPutRequestDTO.getNome())
                 .codigoAcesso(entregadorPostPutRequestDTO.getCodigoAcesso())

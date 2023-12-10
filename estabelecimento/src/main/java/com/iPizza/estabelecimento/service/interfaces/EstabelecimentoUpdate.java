@@ -8,5 +8,4 @@ import com.iPizza.estabelecimento.model.Estabelecimento;
 public interface EstabelecimentoUpdate {
 
     public Estabelecimento update(UUID id, EstabelecimentoPostPutDTO estabelecimentoPostPutDTO);
-
 }

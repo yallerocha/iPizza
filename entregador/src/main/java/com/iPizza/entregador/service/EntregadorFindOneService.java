@@ -13,15 +13,17 @@ import java.util.Optional;
 
 @Service
 public class EntregadorFindOneService implements EntregadorFindOne {
+
     @Autowired
     private EntregadorRepository entregadorRepository;
+
     @Override
     public Entregador findOne(UUID id) {
+
         Optional<Entregador> optionalEntregador = entregadorRepository.findById(id);
         if(optionalEntregador.isEmpty()){
             throw new NotFoundException("Entregador não encontrado");
         }
         return optionalEntregador.get();
-
     }
 }

@@ -1,6 +1,7 @@
 package com.iPizza.entregador.exception;
 
 public class InvalidCodeException extends RuntimeException {
+    
     public InvalidCodeException() {
         super("Código inválido!");
     }

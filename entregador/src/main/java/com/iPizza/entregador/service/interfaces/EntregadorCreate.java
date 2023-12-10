@@ -5,5 +5,5 @@ import com.iPizza.entregador.model.Entregador;
 
 public interface EntregadorCreate {
 
-    public Entregador store(EntregadorPostPutRequestDTO entregadorPostPutRequestDTO);
+    public Entregador create(EntregadorPostPutRequestDTO entregadorPostPutRequestDTO);
 }

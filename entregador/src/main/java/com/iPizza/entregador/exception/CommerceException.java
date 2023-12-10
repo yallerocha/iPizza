@@ -1,6 +1,7 @@
 package com.iPizza.entregador.exception;
 
 public class CommerceException extends RuntimeException {
+    
     public CommerceException() {
         super("Erro inesperado no AppCommerce!");
     }

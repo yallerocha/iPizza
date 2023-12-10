@@ -1,6 +1,5 @@
 package com.iPizza.entregador.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -13,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EntregadorDeleteRequestDTO {
-    @NotNull
+
+    @NotNull(message = "Código de acesso é obrigatório")
     @Size(min = 6, max = 6, message = "O código de acesso deve ter exatamente 6 dígitos")
-    @JsonProperty("codigoAcesso")
-    private String codigoAcesso;
+    private String codigo;
 }

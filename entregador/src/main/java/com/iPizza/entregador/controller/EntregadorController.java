@@ -26,16 +26,12 @@ public class EntregadorController {
 
     @Autowired
     private EntregadorFindAll entregadorFindAll;
-
     @Autowired
     private EntregadorFindOne entregadorFindOne;
-
     @Autowired
     private EntregadorCreate entregadorCreate;
-
     @Autowired
     private EntregadorUpdate entregadorUpdate;
-
     @Autowired
     private EntregadorDelete entregadorDelete;
 
@@ -45,7 +41,7 @@ public class EntregadorController {
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new EntregadorResponseDTO(entregadorCreate.store(entregadorPostPutRequestDTO)));
+                .body(new EntregadorResponseDTO(entregadorCreate.create(entregadorPostPutRequestDTO)));
     }
 
     @GetMapping
