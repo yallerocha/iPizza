@@ -40,7 +40,7 @@ public class EstabelecimentoController {
 	private EstabelecimentoFindOneWithCode EstabelecimentoFindOneWithCode;
 
 	@PostMapping
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPost (
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPost(
 			@Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
 	) {
 		return ResponseEntity
@@ -48,8 +48,27 @@ public class EstabelecimentoController {
 				.body(new EstabelecimentoResponseDTO(estabelecimentoCreate.create(estabelecimentoPostPutDTO)));
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGet(
+			@PathVariable ("id") UUID id
+	) {
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(new EstabelecimentoResponseDTO(estabelecimentoFindOne.findOne(id)));
+	}
+	
+	@GetMapping("/{id}/codigo/{codigo}")
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOneWithCode(
+			@PathVariable ("id") UUID id,
+			@PathVariable ("codigo") String codigo
+	) {
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.body(new EstabelecimentoResponseDTO(EstabelecimentoFindOneWithCode.findOneWithCode(id, codigo)));
+	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPut (
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPut(
 			@PathVariable ("id") UUID id,
 			@Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
 	) {
@@ -59,31 +78,12 @@ public class EstabelecimentoController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> estabelecimentoDelete (
+	public ResponseEntity<Void> estabelecimentoDelete(
 			@PathVariable ("id") UUID id
 	) {
 		estabelecimentoDelete.delete(id);
 		return ResponseEntity
 				.status(HttpStatus.NO_CONTENT)
 				.build();
-	}
-
-	@GetMapping("/{id}")
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOne (
-			@PathVariable ("id") UUID id
-	) {
-		return ResponseEntity
-				.status(HttpStatus.OK)
-				.body(new EstabelecimentoResponseDTO(estabelecimentoFindOne.findOne(id)));
-	}
-	
-	@GetMapping("/{id}/codigo/{codigo}")
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOneWithCode (
-			@PathVariable ("id") UUID id,
-			@PathVariable ("codigo") String codigo
-	) {
-		return ResponseEntity
-				.status(HttpStatus.OK)
-				.body(new EstabelecimentoResponseDTO(EstabelecimentoFindOneWithCode.findOneWithCode(id, codigo)));
 	}
 }
