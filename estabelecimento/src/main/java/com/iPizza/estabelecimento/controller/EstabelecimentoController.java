@@ -45,7 +45,7 @@ public class EstabelecimentoController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGet(
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOne(
 			@PathVariable ("id") UUID id
 	) {
 		return ResponseEntity
@@ -54,7 +54,7 @@ public class EstabelecimentoController {
 	}
 	
 	@GetMapping("/{id}/codigo/")
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetWithCode(
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOneWithCode(
 			@PathVariable ("id") UUID id,
 			@Valid @RequestBody EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO
 	) {

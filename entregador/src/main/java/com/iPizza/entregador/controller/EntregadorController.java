@@ -60,7 +60,7 @@ public class EntregadorController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<EntregadorResponseDTO> entregadorGet(
+    public ResponseEntity<EntregadorResponseDTO> entregadorGetOne(
             @PathVariable("id") UUID id
     ) {
         return ResponseEntity
@@ -69,7 +69,7 @@ public class EntregadorController {
     }
 
     @GetMapping("{id}/codigo/")
-    public ResponseEntity<EntregadorResponseDTO> entregadorGetWithCode(
+    public ResponseEntity<EntregadorResponseDTO> entregadorGetOneWithCode(
             @PathVariable("id") UUID id,
             @RequestBody @Valid EntregadorPostGetPutRequestDTO entregadorPostGetPutRequestDTO
     ) {
