@@ -5,28 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iPizza.entregador.exception.InvalidCodeException;
-import com.iPizza.entregador.exception.NotFoundException;
 import com.iPizza.entregador.model.Entregador;
-import com.iPizza.entregador.repository.EntregadorRepository;
+import com.iPizza.entregador.service.interfaces.EntregadorFindOne;
 import com.iPizza.entregador.service.interfaces.EntregadorFindOneWithCode;
-
-import java.util.Optional;
 
 @Service
 public class EntregadorFindOneWithCodeService implements EntregadorFindOneWithCode {
 
     @Autowired
-    private EntregadorRepository entregadorRepository;
+    private EntregadorFindOne entregadorFindOneService;
 
     @Override
-    public Entregador findOneWithCode(UUID id, String code) {
-        Optional<Entregador> optionalEntregador = entregadorRepository.findById(id);
-        if(optionalEntregador.isEmpty()){
-            throw new NotFoundException("Entregador não encontrado");
-        }
-        Entregador entregador = optionalEntregador.get();
+    public Entregador findOneWithCode(UUID id, String codigo) {
 
-        if(!entregador.getCodigoAcesso().equals(code)){
+        Entregador entregador = entregadorFindOneService.findOne(id);
+
+        if(!entregador.getCodigo().equals(codigo)) {
             throw new InvalidCodeException("Código de acesso do entregador é inválido");
         }
         return entregador;

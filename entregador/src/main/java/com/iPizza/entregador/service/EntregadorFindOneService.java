@@ -9,8 +9,6 @@ import com.iPizza.entregador.model.Entregador;
 import com.iPizza.entregador.repository.EntregadorRepository;
 import com.iPizza.entregador.service.interfaces.EntregadorFindOne;
 
-import java.util.Optional;
-
 @Service
 public class EntregadorFindOneService implements EntregadorFindOne {
 
@@ -20,10 +18,9 @@ public class EntregadorFindOneService implements EntregadorFindOne {
     @Override
     public Entregador findOne(UUID id) {
 
-        Optional<Entregador> optionalEntregador = entregadorRepository.findById(id);
-        if(optionalEntregador.isEmpty()){
-            throw new NotFoundException("Entregador não encontrado");
-        }
-        return optionalEntregador.get();
+        Entregador entregador = entregadorRepository.findById(id).orElseThrow(
+            () -> new NotFoundException("Entregador não encontrado")
+        );   
+        return entregador;
     }
 }

@@ -55,12 +55,12 @@ public class EntregadorControllerTests {
                 .placaVeiculo("ABC-1234")
                 .corVeiculo("Azul")
                 .tipoVeiculo("moto")
-                .codigoAcesso("123456")
+                .codigo("123456")
                 .build()
         );
         entregadorPostPutRequestDTO = EntregadorPostPutRequestDTO.builder()
                 .nome(entregador.getNome())
-                .codigoAcesso(entregador.getCodigoAcesso())
+                .codigoAcesso(entregador.getCodigo())
                 .placaVeiculo(entregador.getPlacaVeiculo())
                 .corVeiculo(entregador.getCorVeiculo())
                 .tipoVeiculo(entregador.getTipoVeiculo())
@@ -89,14 +89,14 @@ public class EntregadorControllerTests {
                     .placaVeiculo("GHF-1212")
                     .corVeiculo("Prata")
                     .tipoVeiculo("carro")
-                    .codigoAcesso("654321")
+                    .codigo("654321")
                     .build();
             Entregador entregador2 = Entregador.builder()
                     .nome("Halloran")
                     .placaVeiculo("MRD-0217")
                     .corVeiculo("Preto")
                     .tipoVeiculo("carro")
-                    .codigoAcesso("217217")
+                    .codigo("217217")
                     .build();
             entregadorRepository.saveAll(Arrays.asList(entregador1, entregador2));
 
@@ -257,7 +257,7 @@ public class EntregadorControllerTests {
         void quandoExcluimosEntregadorSalvo() throws Exception {
             // Arrange
             EntregadorDeleteRequestDTO entregadorDeleteRequestDTO = EntregadorDeleteRequestDTO.builder()
-                    .codigoAcesso("123456")
+                    .codigo("123456")
                     .build();
 
             // Act
@@ -277,7 +277,7 @@ public class EntregadorControllerTests {
         void quandoExcluimosEntregadorInexistente() throws Exception {
             // Arrange
             EntregadorDeleteRequestDTO entregadorDeleteRequestDTO = EntregadorDeleteRequestDTO.builder()
-                    .codigoAcesso("123456")
+                    .codigo("123456")
                     .build();
 
             String idIncorreto = "550e8400-e29b-41d4-a716-446655440000";
@@ -301,7 +301,7 @@ public class EntregadorControllerTests {
         void quandoExcluimosEntregadorComCodigoAcessoInvalido() throws Exception {
             // Arrange
             EntregadorDeleteRequestDTO entregadorDeleteRequestDTO = EntregadorDeleteRequestDTO.builder()
-                    .codigoAcesso("154744")
+                    .codigo("154744")
                     .build();
 
             // Act
@@ -512,7 +512,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .param("codigoAcesso", entregador.getCodigoAcesso())
+                            .param("codigoAcesso", entregador.getCodigo())
                             .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())

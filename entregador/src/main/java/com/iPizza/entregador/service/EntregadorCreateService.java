@@ -16,10 +16,10 @@ public class EntregadorCreateService implements EntregadorCreate {
 
     @Override
     public Entregador create(EntregadorPostPutRequestDTO entregadorPostPutRequestDTO) {
-        
+
         return entregadorRepository.save(Entregador.builder()
                 .nome(entregadorPostPutRequestDTO.getNome())
-                .codigoAcesso(entregadorPostPutRequestDTO.getCodigoAcesso())
+                .codigo(entregadorPostPutRequestDTO.getCodigoAcesso())
                 .corVeiculo(entregadorPostPutRequestDTO.getCorVeiculo())
                 .placaVeiculo(entregadorPostPutRequestDTO.getPlacaVeiculo())
                 .tipoVeiculo(entregadorPostPutRequestDTO.getTipoVeiculo())

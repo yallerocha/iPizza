@@ -18,7 +18,7 @@ public class EntregadorValidator {
         
         Entregador entregador = entregadorFindOneWithCodeService.findOneWithCode(id, codigo);
 
-        if (!entregador.getCodigoAcesso().equals(codigo)) {
+        if (!entregador.getCodigo().equals(codigo)) {
             throw new CommerceException("Código de acesso de entregador " + id + " não confere");
         }
     }

@@ -29,7 +29,7 @@ public class Cliente implements Serializable{
     private String email;
 
     @Column(nullable = false)
-    private String cod;
+    private String codigo;
     
     @JsonIgnore
     @OneToMany(mappedBy = "clienteId")

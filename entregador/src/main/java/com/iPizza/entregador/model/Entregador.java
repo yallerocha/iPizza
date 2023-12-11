@@ -36,7 +36,7 @@ public class Entregador implements Serializable {
 
     @Column(nullable = false)
     @JsonIgnore
-    private String codigoAcesso;
+    private String codigo;
 
     @Embedded
     @JsonIgnore
