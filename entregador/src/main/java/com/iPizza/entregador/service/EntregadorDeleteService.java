@@ -16,12 +16,12 @@ public class EntregadorDeleteService implements EntregadorDelete {
     @Autowired
     private EntregadorRepository entregadorRepository;
     @Autowired
-    private EntregadorFindOneWithCode entregadorFindOneWithCodeService;
+    private EntregadorFindOneWithCode entregadorFindOneWithCode;
 
     @Override
     public void delete(UUID id, EntregadorDeleteRequestDTO entregadorDeleteRequestDTO) {
         
-        Entregador entregador = entregadorFindOneWithCodeService.findOneWithCode(id, entregadorDeleteRequestDTO.getCodigo());
+        Entregador entregador = entregadorFindOneWithCode.findOneWithCode(id, entregadorDeleteRequestDTO.getCodigo());
         entregadorRepository.deleteById(entregador.getId());
     }
 

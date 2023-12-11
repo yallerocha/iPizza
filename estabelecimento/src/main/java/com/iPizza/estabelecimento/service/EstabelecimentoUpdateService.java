@@ -1,6 +1,6 @@
 package com.iPizza.estabelecimento.service;
 
-import com.iPizza.estabelecimento.dto.EstabelecimentoPostPutDTO;
+import com.iPizza.estabelecimento.dto.EstabelecimentoPostGetPutDTO;
 import com.iPizza.estabelecimento.model.Estabelecimento;
 import com.iPizza.estabelecimento.repository.EstabelecimentoRepository;
 import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoFindOne;
@@ -18,12 +18,12 @@ public class EstabelecimentoUpdateService implements EstabelecimentoUpdate {
     @Autowired
     private EstabelecimentoFindOne estabelecimentoFindOneService;
 
-    public Estabelecimento update(UUID id, EstabelecimentoPostPutDTO estabelecimentoPostPutDTO) {
+    public Estabelecimento update(UUID id, EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO) {
         
         Estabelecimento estabelecimentoUpdated = estabelecimentoFindOneService.findOne(id);
 
-        estabelecimentoUpdated.setCodigo(estabelecimentoPostPutDTO.getCodigo());
-        estabelecimentoUpdated.setEmail(estabelecimentoPostPutDTO.getEmail());
+        estabelecimentoUpdated.setCodigo(estabelecimentoPostGetPutDTO.getCodigo());
+        estabelecimentoUpdated.setEmail(estabelecimentoPostGetPutDTO.getEmail());
 
         return estabelecimentoRepository.save(estabelecimentoUpdated);
     }

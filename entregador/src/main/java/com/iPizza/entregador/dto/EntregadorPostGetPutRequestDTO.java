@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EntregadorPostPutRequestDTO {
+public class EntregadorPostGetPutRequestDTO {
 
     @NotNull(message = "Nome e obrigatorio")
     @NotBlank(message = "Nome e obrigatorio")
@@ -21,7 +21,7 @@ public class EntregadorPostPutRequestDTO {
     @NotNull
     @NotBlank
     @Size(min = 6, max = 6, message = "O código de acesso deve ter exatamente 6 dígitos")
-    private String codigoAcesso;
+    private String codigo;
 
     @NotNull(message = "Placa do veiculo e obrigatoria")
     @NotBlank(message = "Placa do veiculo e obrigatoria")

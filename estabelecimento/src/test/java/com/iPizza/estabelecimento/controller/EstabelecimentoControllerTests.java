@@ -3,7 +3,7 @@ package com.iPizza.estabelecimento.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
-import com.iPizza.estabelecimento.dto.EstabelecimentoPostPutDTO;
+import com.iPizza.estabelecimento.dto.EstabelecimentoPostGetPutDTO;
 import com.iPizza.estabelecimento.dto.EstabelecimentoResponseDTO;
 import com.iPizza.estabelecimento.exception.CustomErrorType;
 import com.iPizza.estabelecimento.model.Estabelecimento;
@@ -60,19 +60,19 @@ public class EstabelecimentoControllerTests {
 
 		final String URI_ESTABELECIMENTOS = "/estabelecimentos";
 
-		private EstabelecimentoPostPutDTO estabelecimentoPutRequestDTO;
+		private EstabelecimentoPostGetPutDTO estabelecimentoPutRequestDTO;
 
-		private EstabelecimentoPostPutDTO estabelecimentoPostRequestDTO;
+		private EstabelecimentoPostGetPutDTO estabelecimentoPostRequestDTO;
 
 		@BeforeEach
 		void setup() {
 
-			estabelecimentoPutRequestDTO = EstabelecimentoPostPutDTO.builder()
+			estabelecimentoPutRequestDTO = EstabelecimentoPostGetPutDTO.builder()
 					.codigo("123456")
 					.email("estabelecimento@gmail.com")
 					.build();
 
-			estabelecimentoPostRequestDTO = EstabelecimentoPostPutDTO.builder()
+			estabelecimentoPostRequestDTO = EstabelecimentoPostGetPutDTO.builder()
 					.codigo("654321")
 					.email("estabelecimento@gmail.com")
 					.build();
@@ -149,7 +149,7 @@ public class EstabelecimentoControllerTests {
 		@DisplayName("Quando alteramos um estabelecimento com codigo de acesso inválido")
 		void quandoAlterarEstabelecimentoInvalido() throws Exception {
 			// Arrange
-			EstabelecimentoPostPutDTO estabelecimentoPostPutDTO = EstabelecimentoPostPutDTO.builder()
+			EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO = EstabelecimentoPostGetPutDTO.builder()
 					.codigo("13")
 					.email("estabelecimento@gmail.com")
 					.build();
@@ -158,7 +158,7 @@ public class EstabelecimentoControllerTests {
 			String responseJsonString = driver.perform(put(URI_ESTABELECIMENTOS + "/" + estabelecimento.getId())
 							.contentType(MediaType.APPLICATION_JSON)
 							.param("codigo", estabelecimento.getCodigo())
-							.content(objectMapper.writeValueAsString(estabelecimentoPostPutDTO)))
+							.content(objectMapper.writeValueAsString(estabelecimentoPostGetPutDTO)))
 					.andExpect(status().isBadRequest()) // Codigo 400
 					.andDo(print())
 					.andReturn().getResponse().getContentAsString();
@@ -176,7 +176,7 @@ public class EstabelecimentoControllerTests {
 		@DisplayName("Quando criamos um novo estabelecimento com dados inválidos")
 		void quandoCriarEstabelecimentoInvalido() throws Exception {
 			// Arrange
-			EstabelecimentoPostPutDTO estabelecimentoPostPutDTO = EstabelecimentoPostPutDTO.builder()
+			EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO = EstabelecimentoPostGetPutDTO.builder()
 					.codigo("13")
 					.email("estabelecimento@gmail.com")
 					.build();
@@ -184,7 +184,7 @@ public class EstabelecimentoControllerTests {
 			// Act
 			String responseJsonString = driver.perform(post(URI_ESTABELECIMENTOS)
 							.contentType(MediaType.APPLICATION_JSON)
-							.content(objectMapper.writeValueAsString(estabelecimentoPostPutDTO)))
+							.content(objectMapper.writeValueAsString(estabelecimentoPostGetPutDTO)))
 					.andExpect(status().isBadRequest()) // Codigo 400
 					.andDo(print())
 					.andReturn().getResponse().getContentAsString();

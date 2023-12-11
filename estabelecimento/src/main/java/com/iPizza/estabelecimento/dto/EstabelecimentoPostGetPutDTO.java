@@ -10,7 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EstabelecimentoPostPutDTO implements Serializable {
+public class EstabelecimentoPostGetPutDTO implements Serializable {
 
     @NotBlank
     @Size(min = 6, max = 6, message = "O código de acesso deve ter exatamente 6 dígitos")

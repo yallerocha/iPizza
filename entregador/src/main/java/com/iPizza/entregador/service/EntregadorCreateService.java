@@ -3,7 +3,7 @@ package com.iPizza.entregador.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.iPizza.entregador.dto.EntregadorPostPutRequestDTO;
+import com.iPizza.entregador.dto.EntregadorPostGetPutRequestDTO;
 import com.iPizza.entregador.model.Entregador;
 import com.iPizza.entregador.repository.EntregadorRepository;
 import com.iPizza.entregador.service.interfaces.EntregadorCreate;
@@ -15,14 +15,14 @@ public class EntregadorCreateService implements EntregadorCreate {
     private EntregadorRepository entregadorRepository;
 
     @Override
-    public Entregador create(EntregadorPostPutRequestDTO entregadorPostPutRequestDTO) {
+    public Entregador create(EntregadorPostGetPutRequestDTO entregadorPostGetPutRequestDTO) {
 
         return entregadorRepository.save(Entregador.builder()
-                .nome(entregadorPostPutRequestDTO.getNome())
-                .codigo(entregadorPostPutRequestDTO.getCodigoAcesso())
-                .corVeiculo(entregadorPostPutRequestDTO.getCorVeiculo())
-                .placaVeiculo(entregadorPostPutRequestDTO.getPlacaVeiculo())
-                .tipoVeiculo(entregadorPostPutRequestDTO.getTipoVeiculo())
+                .nome(entregadorPostGetPutRequestDTO.getNome())
+                .codigo(entregadorPostGetPutRequestDTO.getCodigo())
+                .corVeiculo(entregadorPostGetPutRequestDTO.getCorVeiculo())
+                .placaVeiculo(entregadorPostGetPutRequestDTO.getPlacaVeiculo())
+                .tipoVeiculo(entregadorPostGetPutRequestDTO.getTipoVeiculo())
                 .build());
     }
 }

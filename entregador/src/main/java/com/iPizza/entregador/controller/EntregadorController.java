@@ -10,12 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.iPizza.entregador.dto.EntregadorDeleteRequestDTO;
-import com.iPizza.entregador.dto.EntregadorPostPutRequestDTO;
+import com.iPizza.entregador.dto.EntregadorPostGetPutRequestDTO;
 import com.iPizza.entregador.dto.EntregadorResponseDTO;
 import com.iPizza.entregador.service.interfaces.EntregadorCreate;
 import com.iPizza.entregador.service.interfaces.EntregadorDelete;
 import com.iPizza.entregador.service.interfaces.EntregadorFindAll;
 import com.iPizza.entregador.service.interfaces.EntregadorFindOne;
+import com.iPizza.entregador.service.interfaces.EntregadorFindOneWithCode;
 import com.iPizza.entregador.service.interfaces.EntregadorUpdate;
 
 import java.util.List;
@@ -34,14 +35,16 @@ public class EntregadorController {
     private EntregadorUpdate entregadorUpdate;
     @Autowired
     private EntregadorDelete entregadorDelete;
+	@Autowired
+	private EntregadorFindOneWithCode entregadorFindOneWithCode;
 
     @PostMapping
     public ResponseEntity<EntregadorResponseDTO> entregadorPost(
-            @RequestBody @Valid EntregadorPostPutRequestDTO entregadorPostPutRequestDTO
+            @RequestBody @Valid EntregadorPostGetPutRequestDTO entregadorPostGetPutRequestDTO
     ) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(new EntregadorResponseDTO(entregadorCreate.create(entregadorPostPutRequestDTO)));
+                .body(new EntregadorResponseDTO(entregadorCreate.create(entregadorPostGetPutRequestDTO)));
     }
 
     @GetMapping
@@ -65,14 +68,24 @@ public class EntregadorController {
                 .body(new EntregadorResponseDTO(entregadorFindOne.findOne(id)));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<EntregadorResponseDTO> entregadorPut(
-            @PathVariable ("id") UUID id, 
-            @RequestBody @Valid EntregadorPostPutRequestDTO entregadorPostPutRequestDTO
+    @GetMapping("{id}/codigo/")
+    public ResponseEntity<EntregadorResponseDTO> entregadorGetWithCode(
+            @PathVariable("id") UUID id,
+            @RequestBody @Valid EntregadorPostGetPutRequestDTO entregadorPostGetPutRequestDTO
     ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(new EntregadorResponseDTO(entregadorUpdate.update(id, entregadorPostPutRequestDTO)));
+                .body(new EntregadorResponseDTO(entregadorFindOneWithCode.findOneWithCode(id, entregadorPostGetPutRequestDTO.getCodigo())));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<EntregadorResponseDTO> entregadorPut(
+            @PathVariable ("id") UUID id, 
+            @RequestBody @Valid EntregadorPostGetPutRequestDTO entregadorPostGetPutRequestDTO
+    ) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new EntregadorResponseDTO(entregadorUpdate.update(id, entregadorPostGetPutRequestDTO)));
     }
 
     @DeleteMapping("{id}")

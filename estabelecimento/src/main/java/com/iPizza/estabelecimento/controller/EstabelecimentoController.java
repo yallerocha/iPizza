@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.iPizza.estabelecimento.dto.EstabelecimentoPostPutDTO;
+import com.iPizza.estabelecimento.dto.EstabelecimentoPostGetPutDTO;
 import com.iPizza.estabelecimento.dto.EstabelecimentoResponseDTO;
 import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoCreate;
 import com.iPizza.estabelecimento.service.interfaces.EstabelecimentoDelete;
@@ -37,11 +37,11 @@ public class EstabelecimentoController {
 
 	@PostMapping
 	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPost(
-			@Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
+			@Valid @RequestBody EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO
 	) {
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
-				.body(new EstabelecimentoResponseDTO(estabelecimentoCreate.create(estabelecimentoPostPutDTO)));
+				.body(new EstabelecimentoResponseDTO(estabelecimentoCreate.create(estabelecimentoPostGetPutDTO)));
 	}
 
 	@GetMapping("/{id}")
@@ -53,24 +53,24 @@ public class EstabelecimentoController {
 				.body(new EstabelecimentoResponseDTO(estabelecimentoFindOne.findOne(id)));
 	}
 	
-	@GetMapping("/{id}/codigo/{codigo}")
-	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetOneWithCode(
+	@GetMapping("/{id}/codigo/")
+	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoGetWithCode(
 			@PathVariable ("id") UUID id,
-			@PathVariable ("codigo") String codigo
+			@Valid @RequestBody EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO
 	) {
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(new EstabelecimentoResponseDTO(EstabelecimentoFindOneWithCode.findOneWithCode(id, codigo)));
+				.body(new EstabelecimentoResponseDTO(EstabelecimentoFindOneWithCode.findOneWithCode(id, estabelecimentoPostGetPutDTO.getCodigo())));
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<EstabelecimentoResponseDTO> estabelecimentoPut(
 			@PathVariable ("id") UUID id,
-			@Valid @RequestBody EstabelecimentoPostPutDTO estabelecimentoPostPutDTO
+			@Valid @RequestBody EstabelecimentoPostGetPutDTO estabelecimentoPostGetPutDTO
 	) {
 		return ResponseEntity
 				.status(HttpStatus.OK)
-				.body(new EstabelecimentoResponseDTO(estabelecimentoUpdate.update(id, estabelecimentoPostPutDTO)));
+				.body(new EstabelecimentoResponseDTO(estabelecimentoUpdate.update(id, estabelecimentoPostGetPutDTO)));
 	}
 
 	@DeleteMapping("/{id}")

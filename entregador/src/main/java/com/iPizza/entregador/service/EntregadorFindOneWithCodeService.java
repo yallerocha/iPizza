@@ -13,12 +13,12 @@ import com.iPizza.entregador.service.interfaces.EntregadorFindOneWithCode;
 public class EntregadorFindOneWithCodeService implements EntregadorFindOneWithCode {
 
     @Autowired
-    private EntregadorFindOne entregadorFindOneService;
+    private EntregadorFindOne entregadorFindOne;
 
     @Override
     public Entregador findOneWithCode(UUID id, String codigo) {
 
-        Entregador entregador = entregadorFindOneService.findOne(id);
+        Entregador entregador = entregadorFindOne.findOne(id);
 
         if(!entregador.getCodigo().equals(codigo)) {
             throw new InvalidCodeException("Código de acesso do entregador é inválido");

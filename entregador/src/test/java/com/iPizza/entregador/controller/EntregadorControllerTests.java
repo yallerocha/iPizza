@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.iPizza.entregador.dto.EntregadorDeleteRequestDTO;
-import com.iPizza.entregador.dto.EntregadorPostPutRequestDTO;
+import com.iPizza.entregador.dto.EntregadorPostGetPutRequestDTO;
 import com.iPizza.entregador.dto.EntregadorResponseDTO;
 import com.iPizza.entregador.exception.CustomErrorType;
 import com.iPizza.entregador.model.Entregador;
@@ -43,7 +43,7 @@ public class EntregadorControllerTests {
 
     Entregador entregador;
 
-    EntregadorPostPutRequestDTO entregadorPostPutRequestDTO;
+    EntregadorPostGetPutRequestDTO entregadorPostGetPutRequestDTO;
 
     EntregadorResponseDTO entregadorDTO;
 
@@ -58,9 +58,9 @@ public class EntregadorControllerTests {
                 .codigo("123456")
                 .build()
         );
-        entregadorPostPutRequestDTO = EntregadorPostPutRequestDTO.builder()
+        entregadorPostGetPutRequestDTO = EntregadorPostGetPutRequestDTO.builder()
                 .nome(entregador.getNome())
-                .codigoAcesso(entregador.getCodigo())
+                .codigo(entregador.getCodigo())
                 .placaVeiculo(entregador.getPlacaVeiculo())
                 .corVeiculo(entregador.getCorVeiculo())
                 .tipoVeiculo(entregador.getTipoVeiculo())
@@ -103,7 +103,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(get(URI_ENTREGADORES)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -124,7 +124,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(get(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -150,7 +150,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(get(URI_ENTREGADORES + "/" + idIncorreto)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isNotFound())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -170,7 +170,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(post(URI_ENTREGADORES)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isCreated())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -179,10 +179,10 @@ public class EntregadorControllerTests {
 
             // Assert
             assertAll(
-                    () -> assertEquals(entregadorPostPutRequestDTO.getNome(), resultado.getNome()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getPlacaVeiculo(), resultado.getPlacaVeiculo()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getCorVeiculo(), resultado.getCorVeiculo()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getTipoVeiculo(), resultado.getTipoVeiculo())
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getNome(), resultado.getNome()),
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getPlacaVeiculo(), resultado.getPlacaVeiculo()),
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getCorVeiculo(), resultado.getCorVeiculo()),
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getTipoVeiculo(), resultado.getTipoVeiculo())
             );
         }
 
@@ -195,7 +195,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -205,10 +205,10 @@ public class EntregadorControllerTests {
             // Assert
             assertAll(
                     () -> assertEquals(entregadorId, resultado.getId()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getNome(), resultado.getNome()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getPlacaVeiculo(), resultado.getPlacaVeiculo()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getCorVeiculo(), resultado.getCorVeiculo()),
-                    () -> assertEquals(entregadorPostPutRequestDTO.getTipoVeiculo(), resultado.getTipoVeiculo())
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getNome(), resultado.getNome()),
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getPlacaVeiculo(), resultado.getPlacaVeiculo()),
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getCorVeiculo(), resultado.getCorVeiculo()),
+                    () -> assertEquals(entregadorPostGetPutRequestDTO.getTipoVeiculo(), resultado.getTipoVeiculo())
             );
         }
 
@@ -221,7 +221,7 @@ public class EntregadorControllerTests {
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + idIncorreto)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isNotFound())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -236,12 +236,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos um entregador passando um código de acesso inválido")
         void quandoAlteramosEntregadorComCodigoAcessoInvalido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCodigoAcesso("8as54a");
+            entregadorPostGetPutRequestDTO.setCodigo("8as54a");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -328,12 +328,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o nome do entregador com dados válidos")
         void quandoAlteramosNomeDoEntregadorValido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setNome("Lana Del Rey Alterada");
+            entregadorPostGetPutRequestDTO.setNome("Lana Del Rey Alterada");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -348,12 +348,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com nome vazio")
         void quandoAlteramosEntregadorComNomeVazio() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setNome("");
+            entregadorPostGetPutRequestDTO.setNome("");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -371,12 +371,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador passando codigo de acesso inválido")
         void quandoAlteramosEntregadorComCodigoAcessoInvalido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCodigoAcesso("8as54a");
+            entregadorPostGetPutRequestDTO.setCodigo("8as54a");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -396,12 +396,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com placa válida")
         void quandoAlteramosEntregadorComPlacaValida() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setPlacaVeiculo("DEF-3456");
+            entregadorPostGetPutRequestDTO.setPlacaVeiculo("DEF-3456");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -416,12 +416,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com placa vazia")
         void quandoAlteramosEntregadorComPlacaVazia() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setPlacaVeiculo("");
+            entregadorPostGetPutRequestDTO.setPlacaVeiculo("");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -439,12 +439,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador passando codigo de acesso inválido")
         void quandoAlteramosEntregadorComCodigoAcessoInvalido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCodigoAcesso("8as54a");
+            entregadorPostGetPutRequestDTO.setCodigo("8as54a");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -464,12 +464,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com tipo de veiculo válido")
         void quandoAlteramosEntregadorComTipoVeiculoValido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setTipoVeiculo("carro");
+            entregadorPostGetPutRequestDTO.setTipoVeiculo("carro");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -484,12 +484,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com tipo de veiculo nulo")
         void quandoAlteramosEntregadorComTipoVeiculoVazio() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setTipoVeiculo(null);
+            entregadorPostGetPutRequestDTO.setTipoVeiculo(null);
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -507,13 +507,13 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com tipo de veiculo inválido")
         void quandoAlteramosEntregadorComTipoVeiculoInvalido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setTipoVeiculo("bicicleta");
+            entregadorPostGetPutRequestDTO.setTipoVeiculo("bicicleta");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("codigoAcesso", entregador.getCodigo())
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -531,12 +531,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o tipo passando codigo de acesso inválido")
         void quandoAlteramosEntregadorComCodigoAcessoInvalido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCodigoAcesso("8as54a");
+            entregadorPostGetPutRequestDTO.setCodigo("8as54a");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -556,12 +556,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com cor do veiculo válida")
         void quandoAlteramosEntregadorComCorVeiculoValida() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCorVeiculo("preto");
+            entregadorPostGetPutRequestDTO.setCorVeiculo("preto");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -576,12 +576,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos o entregador com cor do veiculo vazia")
         void quandoAlteramosEntregadorComCorVeiculoVazia() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCorVeiculo("");
+            entregadorPostGetPutRequestDTO.setCorVeiculo("");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -599,12 +599,12 @@ public class EntregadorControllerTests {
         @DisplayName("Quando alteramos a cor do veiculo passando codigo de acesso inválido")
         void quandoAlteramosEntregadorComCodigoAcessoInvalido() throws Exception {
             // Arrange
-            entregadorPostPutRequestDTO.setCodigoAcesso("8as54a");
+            entregadorPostGetPutRequestDTO.setCodigo("8as54a");
 
             // Act
             String responseJsonString = driver.perform(put(URI_ENTREGADORES + "/" + entregador.getId())
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -630,7 +630,7 @@ public class EntregadorControllerTests {
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("codigoAcesso", entregador.getCodigoAcesso())
                             .param("disponibilidade", "true")
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -651,7 +651,7 @@ public class EntregadorControllerTests {
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("codigoAcesso", entregador.getCodigoAcesso())
                             .param("disponibilidade", "false")
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isOk())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -672,7 +672,7 @@ public class EntregadorControllerTests {
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("codigoAcesso", entregador.getCodigoAcesso())
                             .param("disponibilidade", "true")
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
@@ -693,7 +693,7 @@ public class EntregadorControllerTests {
                             .contentType(MediaType.APPLICATION_JSON)
                             .param("codigoAcesso", "999999")
                             .param("disponibilidade", "true")
-                            .content(objectMapper.writeValueAsString(entregadorPostPutRequestDTO)))
+                            .content(objectMapper.writeValueAsString(entregadorPostGetPutRequestDTO)))
                     .andExpect(status().isBadRequest())
                     .andDo(print())
                     .andReturn().getResponse().getContentAsString();
