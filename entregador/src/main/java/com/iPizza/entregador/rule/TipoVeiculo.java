@@ -14,7 +14,10 @@ import com.iPizza.entregador.validator.TipoVeiculoValidator;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = TipoVeiculoValidator.class)
 public @interface TipoVeiculo {
+
     String message() default "Tipo do veiculo deve ser moto ou carro";
+
     Class<?>[] groups() default {};
+    
     Class<? extends Payload>[] payload() default {};
 }

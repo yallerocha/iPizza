@@ -16,8 +16,11 @@ public class TipoVeiculoValidator implements ConstraintValidator<TipoVeiculo, St
 
     @Override
     public boolean isValid(String tipoVeiculo, ConstraintValidatorContext context) {
-        String tiposVeiculo[] = {null,"moto", "carro"} ;
+
+        String tiposVeiculo[] = {null,"moto", "carro"};
+
         List<String> list = Arrays.asList(tiposVeiculo);
+        
         return list.contains(tipoVeiculo) ;
     }
 
